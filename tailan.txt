@@ -1,0 +1,737 @@
+% !TEX program = xelatex
+
+
+\documentclass[a4paper,10pt]{article}
+
+\usepackage{fontspec}
+\usepackage{polyglossia}
+\setdefaultlanguage{mongolian}
+\setotherlanguage{english}
+
+\setmainfont{Times New Roman}
+\newfontfamily\cyrillicfont{Times New Roman}[Script=Cyrillic]
+
+\setmonofont{Courier New}
+\newfontfamily\cyrillicfonttt{Courier New}[Script=Cyrillic]
+
+\usepackage[top=0.5in, bottom=0.8in, left=0.87in, right=0.91in]{geometry}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{amsmath,amssymb}
+\usepackage{caption}
+\usepackage{hyperref}
+\usepackage{multicol}
+\usepackage{titlesec}
+\usepackage{indentfirst} 
+\usepackage{colortbl}    
+\usepackage{xcolor}
+\usepackage{tabularx}
+\usepackage{float}
+\usepackage{listings}
+\usepackage{xcolor}
+
+
+\definecolor{codebg}{RGB}{245,245,245}
+\definecolor{codekey}{RGB}{0,0,160}
+\definecolor{codecom}{RGB}{0,128,0}
+
+\lstdefinestyle{pseudo}{
+	backgroundcolor={\color{codebg}},
+	basicstyle={\fontsize{8pt}{9.5pt}\ttfamily},
+	keywordstyle={\color{codekey}\bfseries},
+	commentstyle={\color{codecom}\itshape},
+	breaklines=true,
+	showstringspaces=false,
+	tabsize=4,
+	columns=fixed,
+	keepspaces=true,
+	morekeywords={for,while,if,else,return,function,parallel,merge,split,thread,kernel,global,shared,end,do,then,procedure,call,fork,join,synchronize,each,in,Output,Input}
+}
+\lstset{style=pseudo}
+
+\definecolor{tblheader}{RGB}{91,155,213}
+
+\renewcommand{\figurename}{-р Зураг}
+\renewcommand{\tablename}{-р хүснэгт} 
+\renewcommand{\refname}{АШИГЛАСАН МАТЕРИАЛ, НОМ ЗҮЙ}
+\setlength{\columnsep}{0.25in}
+
+
+\setlength{\parindent}{0.25in} 
+\setlength{\parskip}{0pt}
+\raggedbottom 
+\pagestyle{empty} 
+
+\renewcommand{\thesection}{\Roman{section}}
+\titleformat{\section}[block]{\centering\normalfont\large\bfseries}{\thesection.}{0.5em}{}
+\titlespacing{\section}{0pt}{12pt}{6pt} 
+
+\renewcommand{\thesubsection}{\Alph{subsection}}
+\titleformat{\subsection}[block]{\normalsize\itshape}{\thesubsection.}{0.5em}{}
+\titlespacing{\subsection}{0pt}{10pt}{4pt}
+
+\title{\fontsize{13.5pt}{16pt}\selectfont\textbf{\uppercase{Дан холбоост жагсаалт дээрх оруулах эрэмбэлэлтийн цуваа болон параллель хэрэгжилтийн харьцуулалт}}}
+
+\author{
+	\parbox{\textwidth}{\centering \fontsize{9.5pt}{11pt}\selectfont
+		\textbf{Оюун-Ухааны Төрболд\textsuperscript{1}, Доржанцангийн Ууганбаяр\textsuperscript{2}, Нямын Гантөмөр\textsuperscript{3}} \\[1ex]
+		\textsuperscript{1}Монгол улс, Улаанбаатар, ШУТИС, Мэдээлэл холбооны технологийн сургууль, Компьютерын ухааны тэнхим \\
+		\textsuperscript{2}Монгол улс, Улаанбаатар, ШУТИС, Мэдээлэл холбооны технологийн сургууль, Компьютерын ухааны тэнхим \\
+		\textsuperscript{3}Монгол улс, Улаанбаатар, ШУТИС, Мэдээлэл холбооны технологийн сургууль, Компьютерын ухааны тэнхим\\[1ex]
+		\textit{\underline{B232270090@must.edu.mn}}\textsuperscript{1}, \textit{\underline{B232270004@must.edu.mn}}\textsuperscript{2}
+		\textit{\underline{B231960002@must.edu.mn}}\textsuperscript{3}
+	}
+}
+\date{}
+
+\begin{document}
+	\begin{center}
+		{\fontsize{11pt}{13pt}\bfseries
+			ХҮСНЭГТ-2: ҮНЭЛГЭЭНИЙ ЖУРАМ (CHECKLIST)\par}
+	\end{center}
+	
+	\noindent
+	{\renewcommand{\arraystretch}{1.3}
+		\fontsize{8.5pt}{10pt}\selectfont
+		\begin{tabularx}{\textwidth}{|c|p{4.2cm}|X|c|c|}
+			\hline
+			\rowcolor{tblheader}
+			\textbf{\textcolor{white}{\#}} &
+			\textbf{\textcolor{white}{Үзүүлэлт}} &
+			\textbf{\textcolor{white}{Дэлгэрэнгүй шалгуур}} &
+			\textbf{\textcolor{white}{Оноо}} &
+			\textbf{\textcolor{white}{Шалгах}} \\
+			\hline
+			1   & \textbf{Програм хангамжийн хэрэгжүүлэлт} &  & \textbf{6} & \\ \hline
+			1.1 & Sequential \& OpenMP & \texttt{sequential.cpp}, \texttt{openmp.cpp} зөв ажиллаж, үр дүн зөв гардаг. & 1.5 & \checkmark \\ \hline
+			1.2 & CUDA & \texttt{cuda.cu} — Kernel, Block, Grid, cudaMemcpy зөв кодлогдсон. & 1.5 & \checkmark \\ \hline
+			1.3 & Multi Thread (\texttt{std::thread}) & \texttt{multithread.cpp} — std::thread, join синхрончлол. & 1.5 & \checkmark \\ \hline
+			1.4 & Кодын соёл & Эх код доторх commenting болон Mongolian тайлбар. & 1.5 & \checkmark \\ \hline
+			2   & \textbf{Алгоритмын зохиомж ба Онол} &  & \textbf{3.5} & \\ \hline
+			2.1 & Зохиомжийн зураг & Sequential, std::thread, OpenMP, CUDA — 4 блок схем. & 1.5 & \checkmark \\ \hline
+			2.2 & Онолын тайлбар & Зангилаа, кэш, регистрийн түвшний тайлбар. & 1   & \checkmark \\ \hline
+			2.3 & Псевдо код & 4 хувилбарын псевдо код. & 1   & \checkmark \\ \hline
+			3   & \textbf{Шинжилгээ ба Үр дүн} &  & \textbf{4.5} & \\ \hline
+			3.1 & Хэмжилтүүд & SpeedUp, Execution time, Data transfer time, Throughput. & 1.5 & \checkmark \\ \hline
+			3.2 & Харьцуулсан график & 7 ширхэг график (бэлэн боловсруулсан). & 1.5 & \checkmark \\ \hline
+			3.3 & Дүгнэлт & Үр дүнд тулгуурласан үндэслэлтэй дүгнэлт. & 1.5 & \checkmark \\ \hline
+			4   & \textbf{Тайлангийн стандарт} &  & \textbf{2}   & \\ \hline
+			4.1 & Тайлангийн бүтэц & Хураангуй, Оршил, Онол, Зохиомж, Үр дүн, Дүгнэлт. & 1   & \checkmark \\ \hline
+			4.2 & Latex ба Ишлэл & XeLaTeX-аар бэлтгэсэн, IEEE стандартын ишлэл. & 0.5 & \checkmark \\ \hline
+			\multicolumn{3}{|r|}{\textbf{НИЙТ}} & \textbf{16} & \\ \hline
+	\end{tabularx}}
+	
+	\vspace{6pt}
+	
+	\noindent
+	\fbox{\parbox{\dimexpr\textwidth-2\fboxsep-2\fboxrule\relax}{\centering\fontsize{9pt}{11pt}\selectfont
+			\textbf{Demo Video:} \texttt{[Google Drive линкээ энд оруулна уу — Permission-гүй]}\\
+			\textit{4 хувилбарын кодыг ажиллуулж, terminal output-ыг харуулсан 30--60 секундын бичлэг.}\par}}
+	
+	\newpage 
+	
+	\maketitle
+	\thispagestyle{empty} 
+	\vspace{-2em}
+	
+	\noindent
+	\begin{minipage}{\textwidth}
+		\fontsize{9pt}{11pt}\selectfont
+		\textbf{\textit{Хураангуй:}} \textbf{Энэхүү судалгааны ажлаар \textit{дан холбоост жагсаалт дээрх оруулах
+				эрэмбэлэлт} (Insertion sort on a singly linked list) алгоритмыг
+			дөрвөн өөр хувилбараар --- дараалсан (sequential), C++ \texttt{std::thread},
+			OpenMP, CUDA --- хэрэгжүүлж, $n=10^4$, $10^5$, $10^6$ элементийн
+			санамсаргүй өгөгдөл дээр гүйцэтгэлийг туршив. Параллел стратеги нь
+			жагсаалтыг $T$ тэнцүү хэсэгт \textbf{бодитой зангилааны заагчаар хувааж},
+			thread/block бүр өөрийн хэсгийг pointer-based insertion sort-оор
+			эрэмбэлэн, эцэст нь $\log_{2}T$ шатлалтай parallel pairwise merge-ээр
+			нэгтгэх зарчимд тулгуурлана. Туршилтын үр дүнд:
+			$10^5$ дээр \texttt{std::thread} болон OpenMP хувилбарууд
+			\textbf{200--211$\times$} хурдасгалт, $10^6$ дээр CUDA хувилбар
+			\textbf{4849$\times$} хурдасгалтад тус тус хүрсэн. CUDA нь
+			$n=10^4$ дээр ч дараалсан хувилбараас 1.25$\times$ хурдан, гэвч CPU
+			параллелаас удаан байсан нь GPU-н grid дутуу ашиглалттай (10 block-тэй)
+			холбоотой. Host--device өгөгдөл дамжуулалтын хугацаа (Data transfer
+			time) нь нийт хугацааны 1\%-аас бага байна.}
+		
+		\vspace{0.3cm}
+		\textbf{\textit{Түлхүүр үг:}} \textbf{\textit{Insertion sort, CPU, GPU, Sequential, Thread, OpenMP, CUDA, Speed-Up }}
+	\end{minipage}
+	\vspace{0.6cm}
+	
+	\begin{multicols}{2}
+		\raggedcolumns
+		
+		\section{ОРШИЛ}
+		Энэхүү хичээлийн курсын ажлын хүрээнд "Дан холбоост жагсаалт дээрх оруулах эрэмбэлэлт" (Insertion sort for singly linked list) - ийн алгоритмыг зэрэгцээ байдлаар хэрэгжүүлж түүний гүйцэтгэлийг цуваа хэрэгжилтийн гүйцэтгэлтэй харьцуулах зорилготой. 
+		
+		Дан холбоост жагсаалт дээрх оруулах эрэмбэлэлт нь сонгодог "Оруулах эрэмбэлэлт" (Insertion sort) - ээс зангилаа болон заагчид суурилсан өгөгдлийн бүтэц ашигладаг талаарай ялгаатай. Сонгодог алгоритмтай адил массивын элементүүдийг ухрааж шилжүүлэх боломжгүй байдаг. Харин эх жагсаалтаас зангилаа бүрийг ээлжлэн салган авч, шинээр үүсгэж буй эрэмбэлэгдсэн жагсаалтын эхнээс нь эхлэн хайлт хийн, тохирох байрлалыг олох үед заагчуудыг дахин холбох замаар оруулж эрэмбэлдэг. Дан холбоост жагсаалт нь санах ойд дараалж байдаггүй тул кэш санах ойд ээлгүй байдаг. Мөн GPU (Graphic Processing Unit) - ийн зэрэгцээ хэлбэрийн санах ойн хандалт болон SIMT (Single Instruction, Mutiple Threads) загварт тохиромжгүй байдаг тул түүнийг зэрэгцээ байдлаар хэрэгжүүлэх нь тодорхой хэмжээний сорилт болон хүндрэлтэй. 
+		
+		Ажлын зорилго нь алгоритмыг (1) дараалсан, (2) C++ \texttt{std::thread},
+		(3) OpenMP, (4) CUDA архитектурт суурилсан нийт 4 хувилбараар
+		хэрэгжүүлж, $n=10^4$, $10^5$, $10^6$ элементүүд дээр гүйцэтгэлийн
+		хугацаа, хурдасгалт (SpeedUp), өгөгдөл дамжуулалтын хугацаа (data
+		transfer time), achievable performance (throughput) зэрэг
+		үзүүлэлтээр харьцуулан шинжлэхэд оршино.
+		
+		\section{ОНОЛ}
+		
+		\subsection{Дан холбоост жагсаалт дээрх оруулах эрэмбэлэлт}
+		Дан холбоост жагсаалт (\textit{singly linked list}) нь зангилаа
+		бүрд утга (\texttt{data}) болон дараагийн зангилаа руу заагч (\texttt{next})
+		байрлуулсан, нэг чигийн дараалсан мэдээллийн бүтэц юм. Жагсаалтын
+		урт нь $n$ бол элементэд хандах нь $\mathcal{O}(n)$, харин эхэнд
+		оруулах/устгах нь $\mathcal{O}(1)$ хугацаатай.
+		
+		\textit{Оруулах эрэмбэлэлт} (Insertion sort) нь эх жагсаалтыг
+		``эрэмбэлэгдсэн'' болон ``эрэмбэлэгдээгүй'' гэсэн хоёр хэсэгт
+		хуваан, эрэмбэлэгдээгүй хэсгээс зангилаа авч эрэмбэлэгдсэн хэсгийн
+		зөв байрлалд оруулдаг харьцуулалтат алгоритм юм. Жагсаалт хувилбарт
+		\textit{шилжүүлэх} (shifting) үйлдлийг \textit{заагч дахин холбох}
+		(re-linking) болгож сольдгоороо массив дээрх хувилбараас ялгаатай:
+		
+		\begin{equation}
+			T(n) = \mathcal{O}(n^{2})
+		\end{equation}
+		
+		\noindent учир нь зангилаа бүрд эрэмбэлэгдсэн хэсгийн дунд хүртэл
+		дундаж $n/2$ алхам хийгддэг. Memory-н хувьд in-place: $\mathcal{O}(1)$
+		нэмэлт орон зайтай.
+		
+		\subsection{Параллел тооцооллын үндсэн ойлголтууд}
+		Параллел тооцоололд нийт даалгаврыг \textit{task} эсвэл \textit{data}
+		parallelism зарчмаар жижиг хэсгүүдэд хувааж, олон \textit{thread}
+		зэрэг гүйцэтгэдэг. Гол ойлголтууд:
+		
+		\textbf{Санах ойн шатлал.} CPU нь регистр $\rightarrow$ L1 cache
+		$\rightarrow$ L2 $\rightarrow$ L3 $\rightarrow$ DRAM гэсэн шатлалтай.
+		Цуваа линкэн жагсаалт дээр заагч дагах (pointer chasing) үед
+		зангилаа бүр өөр өөр кэш мөрөнд (cache line) байрладаг тул L1 hit
+		rate бага, гүйцэтгэл удаашрана. Жагсаалтыг $T$ хэсэгт хуваавал
+		chunk бүр L2-д сайн багтаж кэш миссийг бууруулдаг — энэ нь параллел
+		хувилбарт \textit{linear speedup-аас давсан хурдасгалт} (super-linear
+		speedup) өгдөг гол шалтгаан болдог.
+		
+		\textbf{Зангилаа (thread) ба синхрончлол.} Хуваагдсан хэсэг хооронд
+		ажил дуусгахдаа \texttt{join}, \texttt{barrier}, \texttt{atomic}
+		зэрэг механизмаар синхрончлогдох шаардлагатай. Pairwise merge нь
+		шатлал бүрийн төгсгөлд барьерийг шаарддаг.
+		
+		\textbf{SIMT (CUDA).} GPU нь warp буюу 32 thread-ийг нэгэн зэрэг
+		ижил инструкци гүйцэтгүүлдэг. Тиймээс \textit{branch divergence}
+		багатай, coalesced memory access-тэй кодыг сайн дэмждэг. Pointer-based
+		linked list нь random access pattern-той тул GPU-д шууд бичих нь
+		үр ашиггүй.
+		
+		\subsection{std::thread, OpenMP, CUDA загварууд}
+		
+		\textit{C++ \texttt{std::thread}.} C++11-аас хойшхи стандарт сан.
+		Thread бүрийг гар аргаар үүсгэж, \texttt{join}-оор хүлээдэг. Гар
+		удирдлагатай тул maximum уян хатан боловч boilerplate их.
+		
+		\textit{OpenMP.} Compiler директивт суурилсан share-memory
+		параллел загвар. \texttt{\#pragma omp parallel for} зэрэг pragma-ар
+		loop-уудыг параллел болгодог. Thread pool, scheduling-ийг runtime
+		автоматаар хариуцна.
+		
+		\textit{CUDA.} NVIDIA GPU-н дээрх параллел загвар. Грид
+		(\texttt{Grid}) нь олон \texttt{Block}-аас, block нь олон
+		\texttt{Thread}-аас бүрдэнэ. Host (CPU) нь kernel-ийг launch хийж,
+		\texttt{cudaMemcpy}-аар санах ой Host~$\leftrightarrow$~Device хооронд
+		дамжуулна. Memory hierarchy: register $\rightarrow$ shared memory
+		(per-block, $\le 48\,$KB) $\rightarrow$ global memory (DRAM).
+		
+		\section{АЛГОРИТМЫН ЗОХИОМЖ}
+		
+		\subsection{Дараалсан (Sequential) хувилбар}
+		Энгийн pointer-based insertion sort. Гадаад while-loop нь зангилаа
+		бүрийг авч, дотоод while-loop нь \texttt{sorted} жагсаалтын зөв
+		байрлалыг хайж, заагчуудыг шинэчилнэ. Memory access pattern нь
+		\textit{санамсаргүй} (random) тул L1/L2 кэш miss их үүснэ.
+		
+		\begin{figure}[H]
+			\centering
+			\includegraphics[width=\linewidth]{assets/diagram_sequential}
+			\caption{Sequential insertion sort-ийн блок схем.\\
+				\textit{Тайлбар:} Дээд талд эх жагсаалтын head, дараа нь
+				curr/next loop, доор нь эрэмбэлэгдсэн ``sorted'' жагсаалт.
+				Заагчуудыг дахин холбохдоо элементийн бодит шилжилт хийдэггүй
+				(re-linking only).}
+		\end{figure}
+		
+		\textit{Псевдо код 1 --- Sequential Linked-List Insertion Sort:}
+		
+\begin{lstlisting}
+function insertionSortLL(head):
+	sorted <- NULL
+	curr   <- head
+	while curr != NULL do
+		next <- curr.next
+		if sorted == NULL or sorted.data >= curr.data then
+			curr.next <- sorted
+			sorted    <- curr
+		else
+			p <- sorted
+			while p.next != NULL and p.next.data < curr.data do
+			p <- p.next
+		curr.next <- p.next
+		p.next    <- curr
+		curr <- next
+	return sorted
+\end{lstlisting}
+		
+		Дотоод цикл дунджаар $n/2$ алхам хийгддэг тул нийт хугацаа
+		$\mathcal{O}(n^2)$ болно.
+		
+		\subsection{std::thread хувилбар}
+		\textbf{Гол санаа:} жагсаалтыг $T$ тэнцүү хэсэгт \textit{бодит
+			заагчийг таслан} (\texttt{curr->next = nullptr}) хувааж, thread бүр
+		өөрийн хэсгийг pointer-based insertion sort-оор эрэмбэлнэ. Эцэст нь
+		$\log_{2}T$ шатлалтай pairwise merge-ийг параллел гүйцэтгэнэ.
+		
+		\textit{Хугацааны нийлмэл (онол, $T$ thread):}
+		\begin{equation}
+			T_{\text{par}} \approx \mathcal{O}\!\left(\frac{n^2}{T} + n\log T\right)
+		\end{equation}
+		Үүнд $n^2/T$ нь chunk-уудын паралелл insertion sort-ийн хугацаа,
+		$n \log T$ нь pairwise merge-ийн нийт ажил.
+		
+		\begin{figure}[H]
+			\centering
+			\includegraphics[width=0.98\linewidth]{assets/diagram_stdthread.png}
+			\caption{\texttt{std::thread} хувилбарын архитектур: split $\to$
+				parallel sort $\to$ parallel pairwise merge.\\
+				\textit{Тайлбар:} Эх жагсаалт $T=4$ chunk-д хуваагдаж, thread бүр
+				insertion sort хийнэ. Дараа нь хосоор merge хийх 2 шатлал.}
+		\end{figure}
+		
+		\textit{Псевдо код 2 --- std::thread Parallel Insertion Sort:}
+		\begin{lstlisting}
+function parallelInsertionSort(head, n, T):
+	chunks <- splitList(head, n, T)   // size = T
+	parallel for i = 0 .. T-1 do
+		chunks[i] <- insertionSortLL(chunks[i])
+	while size(chunks) > 1 do
+		next <- empty array of size ceil(|chunks|/2)
+		parallel for i = 0 .. |chunks|/2 - 1 do
+		next[i] <- mergeSortedLL(chunks[2i], chunks[2i+1])
+		if |chunks| is odd then
+			next[last] <- chunks[last]
+		chunks <- next
+	return chunks[0]
+		\end{lstlisting}
+		
+		\subsection{OpenMP хувилбар}
+		Дээрх алгоритмтай адил, ялгаа нь параллел loop-ыг \texttt{\#pragma
+			omp parallel for schedule(static) num\_threads(T)} директивээр
+		тэмдэглэдэгт. OpenMP runtime нь thread pool-ийг автоматаар
+		үүсгэдэг тул thread create/join-ийн overhead багасна.
+		
+		\begin{figure}[H]
+			\centering
+			\includegraphics[width=0.98\linewidth]{assets/diagram_openmp.png}
+			\caption{OpenMP fork--join загвар: \texttt{\#pragma omp parallel for}
+				директивийн ажиллагаа.\\
+				\textit{Тайлбар:} Master thread fork хийж $T$ worker үүсгэнэ.
+				Loop-ын төгсгөлд implicit barrier байх ба бүх thread join хийгдэнэ.}
+		\end{figure}
+		
+		\textit{Псевдо код 3 --- OpenMP Parallel:}
+		\begin{lstlisting}
+function parallelInsertionSortOMP(head, n, T):
+	chunks <- splitList(head, n, T)
+	#pragma omp parallel for schedule(static) num_threads(T)
+	for i = 0 .. T-1 do
+		chunks[i] <- insertionSortLL(chunks[i])
+	while size(chunks) > 1 do
+		pairs <- |chunks| / 2
+		#pragma omp parallel for schedule(static)
+		for i = 0 .. pairs-1 do
+		next[i] <- mergeSortedLL(chunks[2i], chunks[2i+1])
+		if odd(|chunks|) then next[last] <- chunks[last]
+			chunks <- next
+	return chunks[0]
+		\end{lstlisting}
+		
+		\subsection{CUDA хувилбар}
+		GPU дээр pointer-based linked list нь \textit{санамсаргүй global
+			memory access} үүсгэдэг тул шууд ажиллахад үр ашиггүй. Тиймээс
+		дараах гурван үе шаттай стратегийг ашигласан:
+		\begin{enumerate}\itemsep 0pt
+			\item \textbf{Host: List $\rightarrow$ Array.} Жагсаалтыг $\mathcal{O}(n)$
+			хугацаанд массив руу хөрвүүлэх.
+			\item \textbf{H2D + GPU sort.} \texttt{cudaMemcpy} ашиглан Device-руу
+			хуулж, kernel-уудаар эрэмбэлнэ:
+			\begin{itemize}\itemsep 0pt
+				\item \texttt{insertionSortKernel}: block бүр 1024 элементтэй
+				chunk-аа shared memory дотор insertion sort хийнэ.
+				\item \texttt{mergeKernel}: $\log_{2}(\text{numChunks})$
+				шатлалтай ping-pong (\texttt{d\_a} $\leftrightarrow$
+				\texttt{d\_b}) parallel merge.
+			\end{itemize}
+			\item \textbf{D2H: Array $\rightarrow$ List.} Үр дүнг Host-руу буцаан
+			хуулж, дахин дан холбоост жагсаалт болгоно.
+		\end{enumerate}
+		
+		\begin{figure}[H]
+			\centering
+			\includegraphics[width=0.98\linewidth]{assets/diagram_cuda.png}
+			\caption{CUDA архитектур --- Grid / Block / Thread шатлал ба санах
+				ойн зохион байгуулалт.\\
+				\textit{Тайлбар:} Зүүн талд Host-аас Device-руу cudaMemcpy. Баруун
+				талд Grid дотор олон Block, block бүр 32 thread, shared memory.
+				Зүүн доод буланд санах ойн шатлал (DRAM $\to$ Shared $\to$ Register).
+				Эцэст нь D2H буцаан хуулна.}
+		\end{figure}
+		
+		\textit{Псевдо код 4 --- CUDA Insertion Sort Kernel:}
+		\begin{lstlisting}
+__global__ insertionSortKernel(arr, n, chunkSize):
+	chunkId <- blockIdx.x
+	start   <- chunkId * chunkSize
+	end     <- min(start + chunkSize, n)
+	if threadIdx.x == 0 then
+	for i = start+1 .. end-1 do
+		key <- arr[i]
+		j   <- i - 1
+		while j >= start and arr[j] > key do
+			arr[j+1] <- arr[j]
+			j <- j - 1
+		arr[j+1] <- key
+
+__global__ mergeKernel(in, out, n, width):
+	idx   <- blockIdx.x * blockDim.x + threadIdx.x
+	start <- idx * 2 * width
+	if start >= n then return
+	mid <- min(start + width,    n)
+	end <- min(start + 2*width,  n)
+	merge(in[start..mid], in[mid..end]) -> out[start..end]
+		\end{lstlisting}
+		
+		
+		
+		
+		\section{ҮР ДҮН}
+		
+		\subsection{Туршилтын орчин}
+		
+		Туршилтыг \textbf{хоёр өөр орчинд} явуулсан:
+		
+		\textit{(А) CPU хувилбарууд} (Sequential, \texttt{std::thread},
+		OpenMP) --- \textbf{Apple Silicon Mac} (10 цөмт CPU), 16~GB
+		RAM. Компилятор: \texttt{clang++ -O2 -std=c++17 -fopenmp -pthread}
+		(\texttt{libomp}).
+		
+		\textit{(Б) CUDA хувилбар} --- \textbf{Google~Colab}, NVIDIA Tesla
+		T4 GPU (16~GB GDDR6, $\sim$320~GB/s device memory bandwidth,
+		PCIe~Gen3 x16 host--device холбоост). Компилятор: \texttt{nvcc -O2
+			-std=c++14}.
+		
+		Бүх хувилбарт яг ижил seed-тэй (\texttt{mt19937(42)}) санамсаргүй
+		жагсаалт ашигласан тул алгоритмын зөв байдал шударгаар шалгагдсан.
+		\textbf{Гэхдээ хоёр өөр машинд хэмжсэн тул нийт хугацааг шууд
+			харьцуулахад тодорхой нюанс үлддэг} --- үүнийг доорх анализ хэсэгт
+		тооцов. Хэмжилтийг \texttt{std::chrono::high\_resolution\_clock} ба
+		CUDA event API-аар хийсэн.
+		
+		
+		\subsection{Нийт гүйцэтгэлийн хугацаа (Execution time)}
+		
+		\begin{table}[H]
+			\centering
+			\fontsize{8pt}{10pt}\selectfont
+			\caption*{\centering\fontsize{8pt}{10pt}\bfseries
+				ХЭМЖИЛТИЙН ҮР ДҮН (НИЙТ ХУГАЦАА, мс)}
+			\caption*{\raggedleft\fontsize{8pt}{10pt}\itshape 1-р хүснэгт.}
+			\vspace{-6pt}
+			\begin{tabular}{|c|r|r|r|r|}
+				\hline
+				\rowcolor{tblheader}
+				\textbf{\textcolor{white}{n}} &
+				\textbf{\textcolor{white}{Sequential}} &
+				\textbf{\textcolor{white}{std::thread}} &
+				\textbf{\textcolor{white}{OpenMP}} &
+				\textbf{\textcolor{white}{CUDA}} \\
+				\hline
+				$10^4$ &       34.35 &     1.244 &     1.287 &   27.57 \\ \hline
+				$10^5$ &   12{,}002  &    60.01  &    56.91  &   68.06 \\ \hline
+				$10^6$ & 1{,}969{,}350 & 21{,}208 & 21{,}338  &  406.14 \\ \hline
+			\end{tabular}
+		\end{table}
+		
+		\begin{figure}[H]
+			\centering
+			\includegraphics[width=0.98\linewidth]{assets/performance_time_ms.png}
+			\caption{Хувилбар тус бүрийн нийт гүйцэтгэлийн хугацаа.\\
+				\textit{Тайлбар:} Логарифм тэнхлэг. Sequential шугам нь 1M дээр
+				$\sim 2 \cdot 10^6$ мс ($\approx$33 мин), параллел хувилбарууд хол
+				доор. CUDA шугам нь 1M дээр бусад параллел хувилбараас 52 дахин
+				доор нь (406 мс vs 21,200 мс).}
+		\end{figure}
+		
+		\subsection{Хурдасгалт (SpeedUp)}
+		$S = T_{\text{seq}}/T_{\text{par}}$ томьёогоор:
+		
+		\begin{table}[H]
+			\centering
+			\fontsize{8pt}{10pt}\selectfont
+			\caption*{\centering\fontsize{8pt}{10pt}\bfseries
+				ХУРДАСГАЛТ (SpeedUp = $T_{\text{seq}}/T_{\text{par}}$)}
+			\caption*{\raggedleft\fontsize{8pt}{10pt}\itshape 2-р хүснэгт.}
+			\vspace{-6pt}
+			\begin{tabular}{|c|r|r|r|}
+				\hline
+				\rowcolor{tblheader}
+				\textbf{\textcolor{white}{n}} &
+				\textbf{\textcolor{white}{std::thread}} &
+				\textbf{\textcolor{white}{OpenMP}} &
+				\textbf{\textcolor{white}{CUDA}} \\
+				\hline
+				$10^4$ &  27.62$\times$ &  26.69$\times$ &   1.25$\times$ \\ \hline
+				$10^5$ & 199.99$\times$ & 210.90$\times$ & 176.35$\times$ \\ \hline
+				$10^6$ &  92.86$\times$ &  92.29$\times$ & \textbf{4849$\times$} \\ \hline
+			\end{tabular}
+		\end{table}
+		
+		\begin{figure}[H]
+			\centering
+			\includegraphics[width=0.98\linewidth]{assets/speedup_vs_sequential.png}
+			\caption{SpeedUp график (логарифм тэнхлэг).\\
+				\textit{Тайлбар:} CUDA шугам $n=10^4$ дээр 1.25$\times$ ($\approx
+				1$ шугам), $n=10^5$ дээр 176$\times$, $n=10^6$ дээр 4849$\times$
+				хүрч CPU параллелаас 3 эрэмбээр давсан. CPU параллел хувилбарууд
+				$n=10^5$ дээр пик 200--211$\times$ хүрч $n=10^6$ дээр 92$\times$
+				хүртэл буурсан нь Amdahl-ийн хууль ажиллаж буйг харуулна.}
+		\end{figure}
+		
+		\subsection{Achievable Performance (Throughput)}
+		Throughput = $n / t$ (элемент/секунд):
+		
+		\begin{figure}[H]
+			\centering
+			\includegraphics[width=0.98\linewidth]{assets/throughput.png}
+			\caption{Achievable performance: 1 секундэд боловсруулсан элементийн
+				тоо.\\
+				\textit{Тайлбар:} Sequential нь $\mathcal{O}(n^2)$-ийн улмаас
+				$n$-аар throughput \textbf{буурдаг}. Параллел хувилбарууд $10^5$
+				дээр $\sim 1.7 \cdot 10^6$ эл/с пик хүрнэ. CUDA $n=10^6$ дээр
+				$\sim 2.05 \cdot 10^6$ эл/с — хамгийн өндөр.}
+		\end{figure}
+		
+		\subsection{Үе шатын задаргаа (Phase breakdown)}
+		
+		\begin{figure}[H]
+			\centering
+			\includegraphics[width=0.98\linewidth]{assets/phase_breakdown_multithread.png}
+			\caption{\texttt{std::thread} үе шатын задаргаа (stacked bar).\\
+				\textit{Тайлбар:} \texttt{sort} үе шат нийт хугацааны 99\%-аас илүү
+				хувийг эзэлдэг. \texttt{split} ба \texttt{merge} нь $\mathcal{O}(n)$
+				тул жижиг.}
+		\end{figure}
+		
+		\begin{figure}[H]
+			\centering
+			\includegraphics[width=0.98\linewidth]{assets/phase_breakdown_openmp.png}
+			\caption{OpenMP үе шатын задаргаа.\\
+				\textit{Тайлбар:} std::thread-тай ижил тогтвортой үр дүн.
+				$n=10^4$ дээр OpenMP runtime overhead арай ажиглагдах ($\sim$1 мс).}
+		\end{figure}
+		
+		\begin{figure}[H]
+			\centering
+			\includegraphics[width=0.98\linewidth]{assets/phase_breakdown_cuda.png}
+			\caption{CUDA үе шатын задаргаа.\\
+				\textit{Тайлбар:} \texttt{compute} (GPU kernel) нь нийт хугацааны
+				85--97\% эзэлдэг. \texttt{H2D} ба \texttt{D2H} (cudaMemcpy)
+				$n=10^6$ дээр ч 1 мс орчим — өгөгдлийн дамжуулалт нь bottleneck биш.
+				\texttt{array$\to$list} нь $n=10^6$ дээр 38.85 мс — Host-н
+				malloc ажиллагаа.}
+		\end{figure}
+		
+		\begin{figure}[H]
+			\centering
+			\includegraphics[width=0.98\linewidth]{assets/cuda_transfer_vs_compute.png}
+			\caption{CUDA: Transfer (H2D+D2H+conversion) vs Compute (GPU)
+				харьцаа $n$ бүрд.\\
+				\textit{Тайлбар:} $n$ томрох тусам compute-ийн харьцаа өсдөг
+				(GPU-н параллелчлал хэрэглэгдэж буйг харуулна). $n=10^4$ дээр
+				compute $\approx 97\%$, $n=10^6$ дээр compute $\approx 85\%$;
+				үлдсэн нь голчлон Host-ын \texttt{array}$\to$\texttt{list}-ийн
+				malloc.}
+		\end{figure}
+		
+		\subsection{CUDA-н дэлгэрэнгүй задаргаа}
+		
+		\begin{table}[H]
+			\centering
+			\fontsize{8pt}{10pt}\selectfont
+			\caption*{\centering\fontsize{8pt}{10pt}\bfseries
+				CUDA-Н ХЭМЖИЛТИЙН ДЭЛГЭРЭНГҮЙ (мс)}
+			\caption*{\raggedleft\fontsize{8pt}{10pt}\itshape 3-р хүснэгт.}
+			\vspace{-6pt}
+			\begin{tabular}{|c|r|r|r|r|r|}
+				\hline
+				\rowcolor{tblheader}
+				\textbf{\textcolor{white}{n}} &
+				\textbf{\textcolor{white}{H2D}} &
+				\textbf{\textcolor{white}{Compute}} &
+				\textbf{\textcolor{white}{D2H}} &
+				\textbf{\textcolor{white}{L$\rightarrow$A}} &
+				\textbf{\textcolor{white}{A$\rightarrow$L}} \\
+				\hline
+				$10^4$ & 0.033 &  26.795 & 0.037 &  0.038 &   0.50 \\ \hline
+				$10^5$ & 0.123 &  61.864 & 0.125 &  0.412 &   3.90 \\ \hline
+				$10^6$ & 0.960 & 343.852 & 1.048 &  4.744 &  38.85 \\ \hline
+			\end{tabular}
+		\end{table}
+		
+		
+		\textbf{Amount of data transferred.} $n=10^6$ элемент,
+		\texttt{sizeof(int)}~$=4$ байт. Иймд нэг чигт дамжуулсан хэмжээ:
+		\begin{equation*}
+			4 \times 10^6 \text{ байт} = 4{,}000{,}000 \text{ байт}
+			\;=\; 4\,\text{MB} \;=\; 3.815\,\text{MiB}.
+		\end{equation*}
+		\noindent Хоёр чигт ($H{\to}D$ + $D{\to}H$) нийт $8\,\text{MB} =
+		7.629\,\text{MiB}$. (Тэмдэглэл: $1\,\text{MB}=10^6$ байт, SI стандарт;
+		$1\,\text{MiB}=2^{20}=1{,}048{,}576$ байт, IEC binary.)
+		
+		\textit{Effective bandwidth (хэмжилтээс):}
+		\begin{equation*}
+			\text{H2D:}\quad
+			\frac{4 \times 10^6 \text{ байт}}{0.960 \times 10^{-3} \text{ с}}
+			\;\approx\; 4.17\,\text{GB/s} \;\;(\equiv 3.88\,\text{GiB/s}),
+		\end{equation*}
+		\begin{equation*}
+			\text{D2H:}\quad
+			\frac{4 \times 10^6 \text{ байт}}{1.048 \times 10^{-3} \text{ с}}
+			\;\approx\; 3.82\,\text{GB/s} \;\;(\equiv 3.55\,\text{GiB/s}).
+		\end{equation*}
+		
+		Туршилт Google~Colab-ийн NVIDIA Tesla~T4 GPU дээр явсан тул
+		PCIe~Gen3~x16 интерфэйсээр явсан болно. PCIe~Gen3~x16-ийн онолын
+		хязгаар $\sim 15.75$~GB/s, реал \texttt{cudaMemcpy} bandwidth
+		ихэвчлэн 5--12~GB/s. Хэмжсэн 3.82--4.17~GB/s нь pinned memory
+		ашиглаагүй (\texttt{cudaMallocHost} биш ердийн \texttt{malloc})
+		тохиолдолд хүлээх хүрээнд буюу 25--40\% theoretical хязгаараас.
+		Pinned memory ашигласан бол $\sim 12$~GB/s хүртэл өсөх боломжтой
+		байсан --- цаашдын оптимизацийн боломж.
+		
+		\subsection{Анализ}
+		
+		\textbf{(1) Жижиг өгөгдөл ($10^4$).} \texttt{std::thread} нь OpenMP-ээс
+		бага зэрэг хурдан (1.244 vs 1.287 мс), CUDA нь дараалснаас
+		1.25$\times$ хурдан (27.57 мс vs 34.35 мс) боловч CPU параллелаас
+		22 дахин удаан. Шалтгаан: $\text{chunkSize}=1024$ үед $n=10^4$ дээр
+		ердөө 10 block үүсэх тул GPU-н хэдэн зуун SM-ийн ердөө 1--2\%
+		ашиглагдана. Grid size нь bottleneck.
+		
+		\textbf{(2) Дунд өгөгдөл ($10^5$).} CPU параллел хоёр хувилбар
+		\textbf{200--211$\times$} хурдасгалттай — $T=10$ thread-аас давсан
+		энэ ``super-linear'' үр дүн нь гол шалтгаан 2: (а) chunk-ууд L2
+		кэшэд сайн багтсан тул pointer chasing-н кэш миссийг бууруулсан;
+		(б) $n^2/T$ зүйлийн нийлмэл бус жижигтсэнг тооцвол $T \cdot$ кэш
+		сайжралт $= \sim$20 дахин нэмэлт олз. CUDA $n=10^5$ дээр аль
+		хэдийн өрсөлдөгч (176$\times$).
+		
+		\textbf{(3) Том өгөгдөл ($10^6$).} CPU параллел SpeedUp 92$\times$
+		болж буурсан --- кэш сайжралт нь 1M дээр L2 ($\sim 10$~MB) хүчин
+		чадлаас давсан тул эффект буурсан. Харин CUDA \textbf{4849$\times$}
+		хүрсэн — GPU-н минглэн thread параллелизм энэ хэмжээнээс л
+		жинхэнэ ажилладаг ($\sim$1000 block, бүх SM ажиллана).
+		
+		\textbf{(4) Data transfer time.} CUDA-ийн нийт хугацааны 0.5\%-аас
+		бага (1M дээр 0.96+1.05 $= 2.01$ мс $/ 406$ мс $= 0.50\%$) —
+		өгөгдөл дамжуулалт нь bottleneck биш. Гол non-compute overhead нь
+		\texttt{array$\rightarrow$list} (38.85 мс, нийт хугацааны 9.6\%) —
+		Host-ийн \texttt{new} malloc-ийн ажиллагаа.
+		
+		\textbf{(5) Total operations.} Sequential 1M-н хувьд $\sim 5 \cdot
+		10^{11}$ харьцуулалт хийсэн. Параллел хувилбар $T=10$ дээр $\sim
+		n^2/T + n \log T \approx 10^{11}$ харьцуулалт. CUDA дээр
+		chunkSize=1024 учраас $\frac{1024^2}{2} \cdot \frac{n}{1024} = 512
+		\cdot n = 5.12 \cdot 10^8$ insertion-sort-ийн compare + $n \log_2
+		\frac{n}{1024} \approx 10^7$ merge compare $= \sim 5.2 \cdot 10^8$
+		нийт. Тийм тоог 343.85 мс-д хийж байгаа нь $\sim 1.51$~Gops. 
+		
+		\section*{ДҮГНЭЛТ}
+		
+		Энэхүү судалгааны ажлаар дан холбоост жагсаалт дээрх оруулах
+		эрэмбэлэлтийг дөрвөн хувилбараар (Sequential, \texttt{std::thread},
+		OpenMP, CUDA) хэрэгжүүлж, $10^4$, $10^5$, $10^6$ элементийн
+		санамсаргүй өгөгдөл дээр харьцуулсан туршилт хийсэн болно.
+		Туршилтын үр дүнгээс дараах гол дүгнэлтүүд гарч байна:
+		
+		(1) \textbf{Параллел стратеги бодитоор үр дүнтэй.} ``Split $\to$
+		parallel sort $\to$ pairwise merge'' стратегиар дөрвөн хувилбарын
+		аль нь ч 100$\times$-ээс илүү хурдасгалт өгсөн. Энэ нь зөвхөн thread
+		тоонд биш, кэш локаль байдал сайжирсан үр дагавар.
+		
+		(2) \textbf{std::thread vs OpenMP.} Хоёр хувилбар бараг ижил
+		гүйцэтгэлтэй ($10^5$, $10^6$ дээр $\pm 1\%$). $10^4$ дээр
+		\texttt{std::thread} 27\%-аар хурдан --- OpenMP-ийн runtime
+		initialization overhead жижиг өгөгдөлд мэдрэгддэг. Реал төсөлд
+		OpenMP-ийн pragma загвар нь кодын уншилт сайжруулдаг тул илүү
+		тохиромжтой.
+		
+		(3) \textbf{CUDA-ийн ``crossover point''.} CUDA нь $n=10^4$ дээр
+		дараалснаас 1.25$\times$ хурдан боловч CPU параллелаас 22$\times$
+		удаан (grid 10 block, GPU underutilized). $n=10^5$ дээр аль хэдийн
+		өрсөлдөгч (176$\times$), $n=10^6$ дээр CPU параллелаас \textbf{52
+			дахин} хурдан (4849$\times$). GPU acceleration нь $\gtrsim 10^5$
+		хэмжээнээс эхлэн үр дүнтэй болохыг тодорхой харуулсан.
+		
+		(4) \textbf{Data transfer нь bottleneck биш.} 1M элемент дээр
+		H2D+D2H нийт $2.01$~мс --- нийт хугацааны $0.50\%$ ($\ll 1\%$).
+		Энэ нь PCIe~Gen3~x16 (онолын $\sim 16$~GB/s)-ийн ердийн bandwidth
+		дээр 8~MB өгөгдөл маш бага хугацаа авдгийг харуулна. Гол
+		bottleneck нь \textbf{GPU-ийн compute} ($343.85$~мс, $84.7\%$),
+		хоёрдугаарт Host дээр массивыг буцаагаад зангилаа болгож
+		хувиргах \texttt{new Node} malloc loop ($38.85$~мс, $9.6\%$). Энэ
+		нь pointer-based мэдээллийн бүтцийн нийтлэг асуудал --- GPU-ын
+		дараах $\mathcal{O}(n)$ host-side rebuilding нь шинэ bottleneck
+		болж гарч ирэв.
+		
+		
+		(5) \textbf{Amdahl-ийн хууль ажиллаж байна.} CPU параллел SpeedUp
+		$10^5$ дээр пик 200$\times$ хүрч $10^6$ дээр 93$\times$-д буурсан
+		нь паралелл хэсгийн харьцаа кэш хязгаараар буурснаар Amdahl-ийн
+		хязгаар хүчтэй болсныг харуулна.
+		
+		\renewcommand{\refname}{АШИГЛАСАН МАТЕРИАЛ}
+		
+		\begin{thebibliography}{10}
+			\fontsize{8pt}{9pt}\selectfont
+			
+			\bibitem{knuth1998} 
+			D.\,E.~Knuth, \textit{The Art of Computer Programming, Volume~3: Sorting and Searching}, 2nd~ed. Reading, MA, USA: Addison-Wesley, 1998.
+			
+			\bibitem{cormen2009} 
+			T.\,H.~Cormen, C.\,E.~Leiserson, R.\,L.~Rivest, and C.~Stein, \textit{Introduction to Algorithms}, 3rd~ed. Cambridge, MA, USA: MIT Press, 2009, ch.~2 \& ch.~10.
+			
+			\bibitem{dagum1998} 
+			L.~Dagum and R.~Menon, ``OpenMP: An industry standard API for shared-memory programming,'' \textit{IEEE Comput.\ Sci.\ Eng.}, vol.~5, no.~1, pp.~46--55, Jan.--Mar.\ 1998.
+			
+			\bibitem{nickolls2008} 
+			J.~Nickolls, I.~Buck, M.~Garland, and K.~Skadron, ``Scalable parallel programming with CUDA,'' \textit{ACM Queue}, vol.~6, no.~2, pp.~40--53, Mar./Apr.\ 2008.
+			
+			\bibitem{satish2009} 
+			N.~Satish, M.~Harris, and M.~Garland, ``Designing efficient sorting algorithms for manycore GPUs,'' in \textit{Proc.\ IEEE Int.\ Symp.\ Parallel \& Distributed Processing (IPDPS)}, 2009, pp.~1--10.
+			
+			\bibitem{iso2017} 
+			ISO/IEC 14882:2017, \textit{Programming Languages --- C++} (\texttt{<thread>}, \texttt{<mutex>}, \texttt{<atomic>} headers), International Organization for Standardization, 2017.
+			
+			\bibitem{nvidia2023} 
+			NVIDIA Corporation, \textit{CUDA C++ Programming Guide}, v12.0, 2023. [Online]. Available: \texttt{https://docs.nvidia.com/cuda/}
+			
+			\bibitem{amdahl1967} 
+			G.~M.~Amdahl, ``Validity of the single processor approach to achieving large scale computing capabilities,'' in \textit{Proc.\ AFIPS Spring Joint Comput.\ Conf.}, 1967, pp.~483--485.
+			
+			\bibitem{herlihy2012} 
+			M.~Herlihy and N.~Shavit, \textit{The Art of Multiprocessor Programming}, Revised Reprint. Morgan Kaufmann, 2012.
+			
+		\end{thebibliography}
+		
+	\end{multicols}
+	
+\end{document}
