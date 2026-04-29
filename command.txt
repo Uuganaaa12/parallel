@@ -4,14 +4,5 @@ clang++ -std=c++17 -O2 main.cpp -Xpreprocessor -fopenmp -I"$(brew --prefix libom
 printf "method,n,threads,repeats,exec_ms,sort_ms,transfer_ms,bytes_transfer,throughput,build_ms,check_ms\n" > results.csv
 
 
-./sequential 10000 5 | grep '^RESULT' >> results.csv
-./main 10000 4 5 | grep '^RESULT' >> results.csv
-
-
-
-./sequential 100000 5 | grep '^RESULT' >> results.csv
-./main 100000 4 5 | grep '^RESULT' >> results.csv
-
-
-./sequential 1000000 5 | grep '^RESULT' >> results.csv
-./main 1000000 4 5 | grep '^RESULT' >> results.csv
+./sequential | grep '^RESULT' | sed 's/^RESULT,//' >> results.csv
+./main | grep '^RESULT' | sed 's/^RESULT,//' >> results.csv

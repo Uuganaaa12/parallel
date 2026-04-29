@@ -160,20 +160,8 @@ void freeList(Node *head)
     }
 }
 
-// ҮНДСЭН ПРОГРАМ (MAIN)
-int main(int argc, char **argv)
+void runForN(int N, int THREADS, int REPEATS)
 {
-    int N = 1000000; // 1M элемент (Use Case)
-    int THREADS = 4; // 4 цөм ашиглах
-    int REPEATS = 5; // Дундаж тооцоолох давталт
-
-    if (argc > 1)
-        N = stoi(argv[1]);
-    if (argc > 2)
-        THREADS = stoi(argv[2]);
-    if (argc > 3)
-        REPEATS = stoi(argv[3]);
-
     cout << "=== Lock-Free Concurrent Insertion Sort ===" << endl;
     cout << "N: " << N << " | Threads: " << THREADS << " | Repeats: " << REPEATS << "\n\n";
 
@@ -250,6 +238,33 @@ int main(int argc, char **argv)
     cout << "RESULT,openmp," << N << "," << THREADS << "," << REPEATS << "," << exec_ms_omp
          << "," << sort_ms_omp << "," << transfer_ms_omp << "," << bytes_transfer_omp
          << "," << throughput_omp << "," << build_ms_omp << "," << check_ms_omp << endl;
+
+    cout << "\n";
+}
+
+// ҮНДСЭН ПРОГРАМ (MAIN)
+int main(int argc, char **argv)
+{
+    int THREADS = 8; // 8 цөм ашиглах
+    int REPEATS = 3; // Дундаж тооцоолох давталт
+
+    if (argc > 2)
+        THREADS = stoi(argv[2]);
+    if (argc > 3)
+        REPEATS = stoi(argv[3]);
+
+    if (argc > 1)
+    {
+        int N = stoi(argv[1]);
+        runForN(N, THREADS, REPEATS);
+        return 0;
+    }
+
+    int sizes[] = {10000, 100000, 1000000};
+    for (int n : sizes)
+    {
+        runForN(n, THREADS, REPEATS);
+    }
 
     return 0;
 }

@@ -80,17 +80,8 @@ void freeList(Node *head)
     }
 }
 
-// ҮНДСЭН ПРОГРАМ (MAIN)
-int main(int argc, char **argv)
+void runForN(int N, int REPEATS)
 {
-    int N = 1000000; // 1M элемент (Use Case)
-    int REPEATS = 5; // Дундаж тооцоолох давталт
-
-    if (argc > 1)
-        N = stoi(argv[1]);
-    if (argc > 2)
-        REPEATS = stoi(argv[2]);
-
     cout << "=== Sequential Insertion Sort ===" << endl;
     cout << "N: " << N << " | Repeats: " << REPEATS << "\n\n";
 
@@ -130,6 +121,30 @@ int main(int argc, char **argv)
     cout << "RESULT,sequential," << N << "," << 1 << "," << REPEATS << "," << exec_ms
          << "," << sort_ms << "," << transfer_ms << "," << bytes_transfer << "," << throughput
          << "," << build_ms << "," << check_ms << endl;
+
+    cout << "\n";
+}
+
+// ҮНДСЭН ПРОГРАМ (MAIN)
+int main(int argc, char **argv)
+{
+    int REPEATS = 3; // Дундаж тооцоолох давталт
+
+    if (argc > 2)
+        REPEATS = stoi(argv[2]);
+
+    if (argc > 1)
+    {
+        int N = stoi(argv[1]);
+        runForN(N, REPEATS);
+        return 0;
+    }
+
+    int sizes[] = {10000, 100000, 1000000};
+    for (int n : sizes)
+    {
+        runForN(n, REPEATS);
+    }
 
     return 0;
 }
