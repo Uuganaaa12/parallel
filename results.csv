@@ -1,1 +1,4 @@
 method,n,threads,repeats,exec_ms,sort_ms,transfer_ms,bytes_transfer,throughput,build_ms,check_ms
+cuda,10000,512,3,12.0601,11.545,0,0,829184,0.355095,0.159922
+cuda,100000,512,3,169.883,164.003,0,0,588639,3.55582,2.32474
+cuda,1000000,512,3,16430.2,16346.1,0,0,60863.6,36.8935,47.1646
